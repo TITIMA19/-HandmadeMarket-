@@ -1,0 +1,26 @@
+{
+  "name": "-handmademarket-",
+  "version": "1.0.0",
+  "description": "Specifications – HandmadeMarket \r 1. Project Objective\r  E-commerce platform where users can both sell and buy handmade products and materials used to create them, using a single dual-role account.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon backend/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TITIMA19/-HandmadeMarket-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TITIMA19/-HandmadeMarket-/issues"
+  },
+  "homepage": "https://github.com/TITIMA19/-HandmadeMarket-#readme",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.0",
+    "nodemon": "^3.1.10"
+  }
+}
