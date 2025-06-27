@@ -1,12 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const cartController = require('../controllers/cartController');
+// In your routes file
+const cartController = require('./controllers/cartController');
 
-// User routes
-router.post("/", cartController.createCart);
-router.get("/", cartController.getAllCart);
-router.get("/:cartId", cartController.getCartById);
-router.put("/:cartId", cartController.updateCart);
-router.delete("/:cartId", cartController.deleteCart);
-
-module.exports = router;
+router.get('/cart/:userId', cartController.getCart);
+router.post('/cart/:userId/add', cartController.addToCart);
+router.put('/cart/:userId/update/:productId', cartController.updateCartItem);
+router.delete('/cart/:userId/remove/:productId', cartController.removeFromCart);
+router.delete('/cart/:userId/clear', cartController.clearCart);
+router.get('/cart/:userId/count', cartController.getCartItemCount);
