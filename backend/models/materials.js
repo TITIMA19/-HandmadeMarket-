@@ -1,6 +1,6 @@
-   const mongoose =require("mongoose");
+ const mongoose =require("mongoose");
 const Schema = mongoose.Schema;
-const productsSchema =new Schema({
+const materialsSchema =new Schema({
    
     title:{
         type: String,
@@ -21,6 +21,6 @@ const productsSchema =new Schema({
         type:Number,
     }
 });
-const Products = mongoose.model("Products", productsSchema);
+const Materials = mongoose.model("Materials", materialsSchema);
 
-module.exports = Products;
+module.exports = Materials;

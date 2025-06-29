@@ -1,9 +1,13 @@
 const express = require('express');
+
+const productsController = require('../controllers/productsController'); // Adjust the path as needed
+
 const router = express.Router();
-const productsController = require('../controllers/productsController');
+
+
 
 // User routes
-router.post("/", productsController.createProducts);
+router.post('/', productsController.createProduct);
 router.get("/", productsController.getAllProducts);
 router.get("/:productId", productsController.getProductsById);
 router.put("/:productId", productsController.updateProduct);

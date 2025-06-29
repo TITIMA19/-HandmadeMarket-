@@ -1,40 +1,33 @@
 const Products = require('../models/products');
 
-exports.createProducts = async(req,res)=>{
-const newProducts =new Products();
-const productstitle = req.body.title;
-const productsdescription = req.body.description;
-const productsimg= req.body.img
-const productscategories= req.body.categories
-const productsprice= req.body.price
-newProducts.title =productstitle;
-newProducts.description=productsdescription;
-newProducts.img=productsimg;
-newProducts.categories=productscategories;
-newProducts.price=productsprice;
-try{
-    await newProducts.save();
-    res.json(newProducts);
-} catch (error){
-    console.error("Error creating user:", error.message);
-     res.status(400).json({ error: error.message });
-}
+exports.createProduct = async (req, res) => {
+  try {
+    const { title, description, image, categories, price } = req.body;
+
+    const newProduct = new Products({
+      title,
+      description,
+      image,         // Just the image string from JSON
+      categories,
+      price,
+    });
+
+    await newProduct.save();
+    res.status(201).json({ message: 'Product created', Product: newProduct });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
+
+
 // Get all Products
 exports.getAllProducts = async(req,res)=>{
-try {
-    const products = await Products.find({});
-    console.log("the products are", products );
-      res.json({
-            products: products,
-            statistics: {
-                total: products.length
-            }
-        });
-} catch (error){
-    console.log("Error fetching products:", error.message);
-    res.status(500).json({ error: "Failed to fetch products" });
-}
+ try {
+    const products = await Products.find();
+    res.json({ products }); // 👈 this must match frontend .data.products
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 // Get a specific product by ID
 exports.getProductsById = async (req, res) => {

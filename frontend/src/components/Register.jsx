@@ -35,11 +35,11 @@ export default function Register({ className, ...props }) {
 
   return (
     <div className={`container-fluid ${className}`} {...props}>
-      <div className="row">
+      <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
         {/* Left: Register Form */}
-        <div className="col-md-6 form-container">
-          <div className="w-75">
-            <h2 className="mb-4 text-center">Create Your Account</h2>
+         <div className="card shadow-lg d-flex flex-row overflow-hidden" style={{ maxWidth: '900px', width: '100%', height: '500px' }}>
+          <div className="p-4" style={{ flex: 1 }}>
+             <h3 className="card-title text-center mb-3">Register</h3>
             <form onSubmit={handleSubmit}>  {/* Attach onSubmit here */}
               <div className="mb-3">
                 <label htmlFor="name" className="form-label">Full Name</label>
@@ -65,17 +65,19 @@ export default function Register({ className, ...props }) {
                   onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
                   required />
               </div>
-              <button type="submit" className="btn btn-success w-100">Register</button>
-              <p className="text-center mt-3">Already have an account? <a href="/login">Login</a></p>
+                
+              <button type="submit" className="btn btn-success w-100"  style={{ backgroundColor: "#fd7e14", color: "white" , border: "2px solid #fd7e14",}}>Register</button>
+              <p className="text-center mt-3">Already have an account? <a href="/login"  style={{ color: "#fd7e14", textDecoration: 'none', fontWeight: 'light' }}>Login</a></p>
             </form>
-          </div>
-        </div>
-
-        {/* Right: Image */}
-        <div className="col-md-6 d-none d-md-block p-0">
-          <img src={Logo} alt="Register image" className="register-img" />
+            </div>
+               <div style={{ flex: 1, overflow: 'hidden' }}  className="col-md-6 d-none d-md-block">
+          <img src={Logo} alt="Register Illustration"   className="img-fluid"   style={{ objectFit: 'cover', borderTopRightRadius: '0.5rem', borderBottomRightRadius: '0.5rem' }} />
         </div>
       </div>
     </div>
+        
+        </div>
+
+       
   );
 }

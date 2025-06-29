@@ -1,0 +1,10 @@
+/* css LandingPage */
+/* navbar */
+.btn-orange-primary {
+  color: white;
+  border: none;
+}
+.btn-orange-primary:hover {
+  background-color: #e96b0f; /* hover effect */
+  color: white;
+}

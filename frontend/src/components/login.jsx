@@ -39,14 +39,20 @@ export default function Login({ className, ...props }) {
 
   return (
     <div className={`container-fluid ${className || ""}`} {...props}>
-      <div className="row">
-        <div className="col-md-6 d-none d-md-block p-0">
-          <img src={Logo} alt="Login" className="login-img" />
+      <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+         <div className="card shadow-lg d-flex flex-row overflow-hidden" style={{ width: '900px', height: '500px' }}>
+         <div style={{ width: '50%', overflow: 'hidden' }}>
+          <img src={Logo} alt="Login" className="login-img" style={{
+                objectFit: 'cover',
+                objectPosition: 'center',
+                borderTopLeftRadius: '0.5rem',
+                borderBottomLeftRadius: '0.5rem'
+              }} />
         </div>
 
-        <div className="col-md-6 form-container">
-          <div className="w-75">
-            <h2 className="mb-4 text-center">Welcome Back</h2>
+        <div className="p-4" style={{ width: '50%' }} >
+          <div className="p-4" style={{ flex: 1 }}>
+            <h2 className="card-title text-center mb-3">Welcome Back</h2>
             <form onSubmit={handleLogin}>
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
@@ -88,17 +94,18 @@ export default function Login({ className, ...props }) {
                   Remember me
                 </label>
               </div>
-              <button type="submit" className="btn btn-primary w-100">
+              <button type="submit" className="btn btn-primary w-100" style={{ backgroundColor: "#fd7e14", color: "white" , border: "2px solid #fd7e14",}}>
                 Login
               </button>
               <p className="text-center mt-3">
-                Don't have an account? <a href="/register">Register</a>
+                Don't have an account? <a href="/register" style={{ color: "#fd7e14", textDecoration: 'none', fontWeight: 'light' }}>Register</a>
               </p>
             </form>
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    // </div>
   );
 }
 
