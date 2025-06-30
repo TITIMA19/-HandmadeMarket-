@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from "../assets/Logo/tazrart.png";
 import headerimage from "../assets/Logo/headerimage.jpg";
-
+import  workshop from "../assets/Logo/workshop.jpg"
 function LandingPages() {
   const handleRegisterClick = () => {
     // Redirect to the registration page or show a modal
@@ -76,7 +76,7 @@ const handleLoginClick = () => {
     </div>
   </section>
 
-  {/* 🧺 2. Cards Showing Items in Categories */}
+  
   <section className="mb-5">
     <h3 className="fw-bold mb-4 text-center">🎨 Explore Our Products</h3>
     <div className="row">
@@ -201,22 +201,22 @@ const handleLoginClick = () => {
     </div>
   </section>
   <section className="py-5 bg-light rounded">x
-  <div className="container" style={{ zIndex: 2, position: "relative" }}>
+  <div className="container" style={{ backgroundImage: `url(${workshop})`, backgroundSize: "cover", backgroundPosition: "center", height: "500px", position: "relative",}}>
     <h2 className="display-5">🎨 Learn with Our Courses</h2>
     <p className="lead">
       Tazrart offers workshops and online courses to help you master traditional artisan skills. Join the community and learn something beautiful!
     </p>
   </div>
 </section>
-<section className="container py-5 text-center">
-  <h2 className="mb-4">✨ What is TAZRART?</h2>
-  <p className="lead text-muted">
+<section className="container py-5 text-center" style={{ backgroundColor: "#2b4353",color: "#9cd3d3" }}>
+  <h2 className="mb-4">What is TAZRART?</h2>
+  <p className="lead text-white" >
     <strong>TAZRART</strong> is a platform dedicated to showcasing and celebrating Moroccan craftsmanship. We connect talented artisans with people who value handmade, authentic, and meaningful products.
   </p>
 </section>
 <section className="py-5 bg-light rounded">
     <div className="container">
-      <h3 className="fw-bold text-center mb-4">📬 Contact Us</h3>
+      <h3 className="fw-bold text-center mb-4">Contact Us</h3>
       <form className="mx-auto" style={{ maxWidth: "600px" }}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">Your Name</label>

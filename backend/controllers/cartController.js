@@ -1,6 +1,26 @@
 const Cart = require('../models/cart');
-const { getProductById } = require('./ProductController');
-const { getMaterialById } = require('./MaterialController');
+// const { getProductById } = require('./productsController');
+// const { getMaterialById } = require('./MaterialController');
+const Product = require('../models/products'); // Adjust model name if needed
+const Material = require('../models/materials'); // Adjust model name if needed
+
+// Return material by ID
+const getMaterialById = async (id) => {
+  return await Material.findById(id);
+};
+
+module.exports = {
+  getMaterialById
+};
+
+// Return product by ID
+const getProductById = async (id) => {
+  return await Product.findById(id);
+};
+
+module.exports = {
+  getProductById
+};
 
 // Get user's cart
 const getCart = async (req, res) => {
@@ -27,60 +47,37 @@ const getCart = async (req, res) => {
 // Add item (product or material) to cart
 const addToCart = async (req, res) => {
   try {
-    const { userId } = req.params;
-    const { itemId, itemType, quantity = 1 } = req.body;
+    const { userId, productId, quantity } = req.body;
 
-    if (!itemId || !itemType) {
-      return res.status(400).json({
-        success: false,
-        message: 'Item ID and itemType are required'
-      });
+    if (!userId || !productId || !quantity) {
+      return res.status(400).json({ message: 'Missing required data' });
     }
 
-    // 🔍 Validate item existence
-    let itemExists = null;
-    if (itemType === 'product') {
-      itemExists = await getProductById(itemId);
-    } else if (itemType === 'material') {
-      itemExists = await getMaterialById(itemId);
-    }
-
-    if (!itemExists) {
-      return res.status(404).json({
-        success: false,
-        message: `${itemType} not found`
-      });
-    }
-
+    // Find user's cart or create a new one
     let cart = await Cart.findOne({ userId });
 
     if (!cart) {
       cart = new Cart({ userId, products: [] });
     }
 
-    const existingIndex = cart.products.findIndex(
-      item => item.itemId.toString() === itemId && item.itemType === itemType
-    );
+    // Check if product already in cart
+    const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
 
-    if (existingIndex > -1) {
-      cart.products[existingIndex].quantity += quantity;
+    if (productIndex > -1) {
+      // If product exists, update quantity
+      cart.products[productIndex].quantity += quantity;
     } else {
-      cart.products.push({ itemId, itemType, quantity });
+      // Else add new product to cart
+      cart.products.push({ productId, quantity });
     }
 
+    // Save cart to MongoDB
     await cart.save();
 
-    res.status(200).json({
-      success: true,
-      message: `${itemType} added to cart`,
-      cart
-    });
+    res.status(200).json({ message: 'Product added to cart', cart });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Error adding item to cart',
-      error: error.message
-    });
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 

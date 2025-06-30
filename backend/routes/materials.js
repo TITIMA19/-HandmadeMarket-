@@ -5,7 +5,7 @@ const materialsController = require('../controllers/materialsController'); // Ad
 const router = express.Router();
 
 // User routes
-
+router.post('/',materialsController.createMaterial);
 router.get("/", materialsController.getAllmaterials);
 router.get("/:materialId", materialsController.getmaterialsById);
 router.put("/:materialId", materialsController.updateMaterial);

@@ -6,8 +6,7 @@ import LandingPages from './components/LandingPages';
 import Login from './components/login';
 import Register from './components/Register';
 import Cart from './components/Cart';
-import AdminDashboard from './page/AdminDashboard';
-import Users from './page/Users'
+// import User from './components/User'
 import "./App.css"
 function App() {
   return (
@@ -19,8 +18,7 @@ function App() {
         <Route path="/shop" element={<Shop />} />
          <Route path="/cart" element={<Cart />} />
          <Route path="/material" element={<Material/>} />
-         <Route path="/admindashbord" element={<  AdminDashboard/>} />
-          <Route path="/users" element={<  Users/>} />
+          {/* <Route path="/user" element={<  User/>} /> */}
 
       </Routes>
     </Router>
