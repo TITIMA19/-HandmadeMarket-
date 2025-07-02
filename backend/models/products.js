@@ -15,7 +15,8 @@ const productsSchema =new Schema({
         required: true,
     },
      categories:{
-        type:Array,
+        type: [String],
+       
     },
      price:{
         type:Number,

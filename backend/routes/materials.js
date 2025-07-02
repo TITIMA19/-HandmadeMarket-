@@ -1,14 +1,15 @@
-const express = require('express');
+const router = require("express").Router();
+const {
+  createMaterial,
+  getMaterials,
+  updateMaterial,
+  deleteMaterial
+} = require("../controllers/materialController");
+const verifyToken = require("../middleware/verifyToken");
 
-const materialsController = require('../controllers/materialsController'); // Adjust the path as needed
-
-const router = express.Router();
-
-// User routes
-router.post('/',materialsController.createMaterial);
-router.get("/", materialsController.getAllmaterials);
-router.get("/:materialId", materialsController.getmaterialsById);
-router.put("/:materialId", materialsController.updateMaterial);
-router.delete("/:materialId", materialsController.deleteMaterial);
+router.get("/", getMaterials);
+router.post("/", verifyToken, createMaterial);
+router.put("/:id", verifyToken, updateMaterial);
+router.delete("/:id", verifyToken, deleteMaterial);
 
 module.exports = router;

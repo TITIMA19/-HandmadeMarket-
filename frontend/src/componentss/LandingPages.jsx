@@ -1,15 +1,18 @@
-import React from 'react';
 import Logo from "../assets/Logo/tazrart.png";
+import React, { useContext } from 'react'
+import { UserContext } from './UserContext';
+import { FaUserCircle } from 'react-icons/fa'
 import headerimage from "../assets/Logo/headerimage.jpg";
 import  workshop from "../assets/Logo/workshop.jpg"
 function LandingPages() {
+   const { user } = useContext(UserContext);
   const handleRegisterClick = () => {
-    // Redirect to the registration page or show a modal
-    window.location.href = '/register'; // Example redirect
+   
+    window.location.href = '/register'; 
   };
 const handleLoginClick = () => {
-    // Redirect to the registration page or show a modal
-    window.location.href = '/login'; // Example redirect
+    
+    window.location.href = '/login'; 
   };
   return (
     <>
@@ -17,11 +20,14 @@ const handleLoginClick = () => {
         <a className="navbar-brand" href="/">
           <img src={Logo} alt="Logo" style={{ height: "80px", width: "auto",borderRadius: "50%", objectFit: "cover" }}className="d-inline-block align-text-top"/>
         </a>
-
+{user ? (
+          <FaUserCircle size={28} style={{ cursor: 'pointer' }}  />
+        ) : (
         <div className="ms-auto">
           <button className="btn btn-orange-primary me-2" style={{color: "#fd7e14" , border: "2px solid #fd7e14"}} onClick={handleLoginClick}>Login</button>
           <button className="btn btn-primary" style={{ backgroundColor: "#fd7e14", color: "white" , border: "2px solid #fd7e14",}} onClick={handleRegisterClick}>Register</button>
         </div>
+        )}
       </nav>
      <header className="text-white d-flex align-items-center"style={{ backgroundImage: `url(${headerimage})`, backgroundSize: "cover", backgroundPosition: "center", height: "500px", position: "relative",}}>
   <div  style={{ backgroundColor: "rgba(0, 0, 0, 0.5)", position: "absolute", top: 0, left: 0, right: 0, bottom: 0, }}>
@@ -42,8 +48,8 @@ const handleLoginClick = () => {
 <main className="container py-5">
 
   {/* 🔶 1. Product Categories with Icons */}
-  <section className="mb-5">
-    <h2 className="fw-bold mb-4 text-center">🛍️ Product Categories</h2>
+  {/* <section className="mb-5">
+    <h2 className="fw-bold mb-4 text-center"> Product Categories</h2>
     <div className="row text-center">
       <div className="col-md-3 mb-4">
         <div className="p-4 border rounded shadow-sm h-100">
@@ -74,11 +80,11 @@ const handleLoginClick = () => {
         </div>
       </div>
     </div>
-  </section>
+  </section> */}
 
   
   <section className="mb-5">
-    <h3 className="fw-bold mb-4 text-center">🎨 Explore Our Products</h3>
+    <h3 className="fw-bold mb-4 text-center">Explore Our Products</h3>
     <div className="row">
       {/* Card 1 */}
       <div className="col-md-4 mb-4">
@@ -132,8 +138,8 @@ const handleLoginClick = () => {
       </div>
     </div>
   </section>
- <section className="mb-5">
-    <h2 className="fw-bold mb-4 text-center">🧵 Material Categories</h2>
+ {/* <section className="mb-5">
+    <h2 className="fw-bold mb-4 text-center"> Material Categories</h2>
     <div className="row text-center">
       <div className="col-md-4 mb-4">
         <div className="p-4 border rounded shadow-sm h-100">
@@ -157,11 +163,11 @@ const handleLoginClick = () => {
         </div>
       </div>
     </div>
-  </section>
+  </section> */}
 
   {/* 🔶 2. Material Cards */}
   <section className="mb-5">
-    <h3 className="fw-bold mb-4 text-center">🔬 Explore Our Materials</h3>
+    <h3 className="fw-bold mb-4 text-center"> Explore Our Materials</h3>
     <div className="row">
       {/* Card 1 */}
       <div className="col-md-4 mb-4">
@@ -200,14 +206,34 @@ const handleLoginClick = () => {
       </div>
     </div>
   </section>
-  <section className="py-5 bg-light rounded">x
-  <div className="container" style={{ backgroundImage: `url(${workshop})`, backgroundSize: "cover", backgroundPosition: "center", height: "500px", position: "relative",}}>
-    <h2 className="display-5">🎨 Learn with Our Courses</h2>
-    <p className="lead">
-      Tazrart offers workshops and online courses to help you master traditional artisan skills. Join the community and learn something beautiful!
-    </p>
+  <section className="py-5 bg-light rounded">
+  <div className="container">
+    <div className="row align-items-center">
+      {/* Image on the left */}
+      <div className="col-md-6">
+        <div 
+          style={{ 
+            backgroundImage: `url(${workshop})`, 
+            backgroundSize: "cover", 
+            backgroundPosition: "center", 
+            width: "100%", 
+            height: "690px", 
+            borderRadius: "10px" 
+          }}
+        ></div>
+      </div>
+
+      {/* Text on the right */}
+      <div className="col-md-6">
+        <h2 className="display-5">Learn with Our Courses</h2>
+        <p className="lead">
+          Tazrart offers workshops and online courses to help you master traditional artisan skills. Join the community and learn something beautiful!
+        </p>
+      </div>
+    </div>
   </div>
 </section>
+
 <section className="container py-5 text-center" style={{ backgroundColor: "#2b4353",color: "#9cd3d3" }}>
   <h2 className="mb-4">What is TAZRART?</h2>
   <p className="lead text-white" >
@@ -326,24 +352,6 @@ const handleLoginClick = () => {
           </li>
         </ul>
         <h5 className="mt-4 mb-3">Materials</h5>
-        <ul className="list-unstyled">
-          <li>
-            <a href="#" className="text-white text-decoration-none">
-              Clay
-            </a>
-          </li>
-          <li>
-            <a href="#" className="text-white text-decoration-none">
-              Leather
-            </a>
-          </li>
-          <li>
-            <a href="#" className="text-white text-decoration-none">
-              Wood
-            </a>
-          </li>
-        </ul>
-         <h5 className="mt-4 mb-3">Machine</h5>
         <ul className="list-unstyled">
           <li>
             <a href="#" className="text-white text-decoration-none">

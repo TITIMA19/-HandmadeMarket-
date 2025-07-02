@@ -1,16 +1,15 @@
-const express = require('express');
+const router = require("express").Router();
+const {
+  createProduct,
+  getProducts,
+  updateProduct,
+  deleteProduct
+} = require("../controllers/productController");
+const verifyToken = require("../middleware/verifyToken");
 
-const productsController = require('../controllers/productsController'); // Adjust the path as needed
-
-const router = express.Router();
-
-
-
-// User routes
-router.post('/', productsController.createProduct);
-router.get("/", productsController.getAllProducts);
-router.get("/:productId", productsController.getProductsById);
-router.put("/:productId", productsController.updateProduct);
-router.delete("/:productId", productsController.deleteProduct);
+router.get("/", getProducts);
+router.post("/", verifyToken, createProduct);
+router.put("/:id", verifyToken, updateProduct);
+router.delete("/:id", verifyToken, deleteProduct);
 
 module.exports = router;

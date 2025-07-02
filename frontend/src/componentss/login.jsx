@@ -8,21 +8,22 @@ export default function Login({ className, ...props }) {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      // Replace with your actual API endpoint
-      const response = await axios.post("http://localhost:3000/api/login", form);
-      
-      if (response.status === 200) {
-        // Example: Save token or user info
-        localStorage.setItem("token", response.data.token);
-        
-        // Redirect after successful login
-        navigate("/"); // Or any route you want
-      }
-    } catch (error) {
-      console.error("Login failed:", error);
-      alert("Invalid email or password");
+     e.preventDefault();
+   const res = await fetch("http://localhost:3000/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+        localStorage.setItem("userRole", data.role); // 👈 Save role to localStorage
+        localStorage.setItem("userEmail", form.email); // <== Save email too
+
+      navigate("/");
+    } else {
+      alert("Login failed");
     }
   };
 
