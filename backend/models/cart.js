@@ -1,44 +1,16 @@
-// models/Cart.js
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-// const CartItemSchema = new mongoose.Schema({
-//     type: {
-//         type: String,
-//         enum: ['Product', 'Material'], // Allowed values
-//         required: true
-//     },
-//     item: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         refPath: 'cartItems.type', // Dynamic reference
-//         required: true
-//     },
-//     quantity: {
-//         type: Number,
-//         default: 1
-//     },
-//     price: {
-//         type: Number,
-//         required: true
-//     }
-// });
-
-// const CartSchema = new mongoose.Schema({
-//     user: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: 'User',
-//         required: true
-//     },
-//     cartItems: [CartItemSchema]
-// });
-
-// const Cart = mongoose.model('Cart', CartSchema);
-// module.exports = Cart;
-const mongoose = require("mongoose")
-const cartSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-  quantity: { type: Number, default: 1 }
+const cartItemSchema = new mongoose.Schema({
+  productId: { type: mongoose.Schema.Types.ObjectId, refPath: 'items.itemType' },
+  itemType: { type: String, enum: ['Product', 'Material'] },
+  quantity: { type: Number, default: 1 },
+  price: Number,
 });
 
-const Cart= mongoose.model("Cart", cartSchema);
-module.exports =Cart
+const cartSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  items: [cartItemSchema],
+  createdAt: { type: Date, default: Date.now },
+});
+
+module.exports = mongoose.model('Cart', cartSchema);

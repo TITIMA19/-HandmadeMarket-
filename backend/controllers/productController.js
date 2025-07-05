@@ -1,22 +1,27 @@
-const Product = require("../models/Product");
+const Product = require('../models/Product');
 
-exports.createProduct = async (req, res) => {
-  const product = new Product(req.body);
-  await product.save();
-  res.status(201).json(product);
-};
-
-exports.getProducts = async (req, res) => {
+exports.getAll = async (req, res) => {
   const products = await Product.find();
   res.json(products);
 };
 
-exports.updateProduct = async (req, res) => {
-  const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json(updated);
+exports.create = async (req, res) => {
+  const { name, category, description, price, imageBase64 } = req.body;
+  const product = new Product({ name, category, description, price, imageBase64 });
+  await product.save();
+  res.status(201).json(product);
+
 };
 
-exports.deleteProduct = async (req, res) => {
-  await Product.findByIdAndDelete(req.params.id);
-  res.json({ message: "Deleted" });
+exports.update = async (req, res) => {
+  const { id } = req.params;
+  const { name, category, description, price, imageBase64 } = req.body;
+  const product = await Product.findByIdAndUpdate(id, { name, category, description, price, imageBase64 }, { new: true });
+  res.json(product);
+};
+
+exports.delete = async (req, res) => {
+  const { id } = req.params;
+  await Product.findByIdAndDelete(id);
+  res.json({ message: 'Deleted' });
 };

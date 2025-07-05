@@ -1,36 +1,73 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+// import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
-function Cart() {
-  const [cart, setCart] = useState([]);
+function Cart({ token }) {
+  const [cart, setCart] = useState({ items: [] });
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("cart")) || [];
-    setCart(stored);
-  }, []);
+    async function fetchCart() {
+      const res = await axios.get('http://localhost:3000/api/cart', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setCart(res.data);
+    }
+    fetchCart();
+  }, [token]);
 
-  const total = cart.reduce((acc, item) => acc + item.price, 0);
+  useEffect(() => {
+    let sum = 0;
+    if (cart.items) {
+      cart.items.forEach(item => sum += item.price * item.quantity);
+    }
+    setTotal(sum);
+  }, [cart]);
 
-  const removeItem = (index) => {
-    const updated = cart.filter((_, i) => i !== index);
-    setCart(updated);
-    localStorage.setItem("cart", JSON.stringify(updated));
-  };
+//   const handleApprove = (orderId) => {
+//     alert('Payment Successful! Order ID: ' + orderId);
+//     // TODO: Clear cart after successful payment
+//   };
 
   return (
-    <div className="container mt-4">
-      <h2>Your Cart</h2>
-      {cart.length === 0 ? <p>No items in cart.</p> :
-        <div>
-          <ul className="list-group">
-            {cart.map((item, i) => (
-              <li key={i} className="list-group-item d-flex justify-content-between">
-                {item.title} - ${item.price}
-                <button className="btn btn-danger btn-sm" onClick={() => removeItem(i)}>Remove</button>
-              </li>
-            ))}
-          </ul>
-          <h4 className="mt-3">Total: ${total}</h4>
-        </div>}
+    <div className="table table-bordered">
+      <h2>Cart</h2>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Name</th><th>Quantity</th><th>Price</th><th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cart.items?.map((item, i) => (
+            <tr key={i}>
+              <td>{item.itemType} - {item.productId}</td>
+              <td>{item.quantity}</td>
+              <td>${item.price}</td>
+              <td>${item.price * item.quantity}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h4>Total: ${total.toFixed(2)}</h4>
+
+      {/* <PayPalScriptProvider options={{ "client-id": "test" }}>
+        <PayPalButtons
+          style={{ layout: 'vertical' }}
+          createOrder={(data, actions) => {
+            return actions.order.create({
+              purchase_units: [{
+                amount: { value: total.toFixed(2) }
+              }]
+            });
+          }}
+          onApprove={(data, actions) => {
+            return actions.order.capture().then(details => {
+              handleApprove(data.orderID);
+            });
+          }}
+        />
+      </PayPalScriptProvider> */}
     </div>
   );
 }

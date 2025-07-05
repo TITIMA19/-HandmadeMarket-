@@ -2,26 +2,28 @@ const express = require('express');
 const connectDB = require('./config/db'); // Adjust the path as needed
 const cors = require('cors');
 const app = express();
-// const bodyParser = require('body-parser');
-// const userRoutes = require('./routes/users');
-// const  authRoutes = require("./routes/auth");
-// const productsRoutes = require("./routes/products")
-// const materialsRoutes = require("./routes/materials")
-// const cartRoutes = require('./routes/cart');
-// app.use(express.json());
-// app.use(bodyParser.json());
-// app.use('/users', userRoutes);
-// app.use('/materials', materialsRoutes);
-// app.use('/products', productsRoutes);
-// app.use("/api", authRoutes);
-// app.use("/api/user",cartRoutes); 
-// app.post('/profile', upload.single('file'), function (req, res, next) {
-//   res.send('Uploaded successfully')
-// })
+
 app.use(cors());
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/products", require("./routes/products"));
-app.use("/api/materials", require("./routes/materials"));
+app.use(express.json({ limit: '10mb' })); // for large base64 images
+
+// Import routes
+const authRoutes = require('./routes/auth');
+const productRoutes = require('./routes/products');
+const materialRoutes = require('./routes/materials');
+const courseRoutes = require('./routes/courses');
+const cartRoutes = require('./routes/cart');
+const statsRoutes = require('./routes/stats');
+
+// Use routes
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/materials', materialRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/stats', statsRoutes);
+const statsController = require('./controllers/statsController');
+app.use(statsController.recordVisitor);
+
 connectDB();
 app.listen(3000, () => {
     console.log('Example app listening on port 3000');

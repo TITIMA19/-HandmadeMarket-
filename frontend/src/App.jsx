@@ -1,52 +1,62 @@
-// import React from 'react';
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import Material from './components/Materials';
-// import Shop from './components/Shop';
-// import LandingPages from './components/LandingPages';
-// import Login from './components/login';
-// import Register from './components/Register';
-// import Cart from './components/Cart';
-
-// import "./App.css"
-// function App() {
-//   return (
-//     <Router>
-//       <Routes>
-//         <Route path="/" element={<LandingPages />} />
-//         <Route path="/login" element={<Login />} />
-//         <Route path="/register" element={<Register />} />
-//         <Route path="/shop" element={<Shop />} />
-//          <Route path="/cart" element={<Cart />} />
-//          <Route path="/material" element={<Material/>} />
-//           {/* <Route path="/user" element={<  User/>} /> */}
-
-//       </Routes>
-//     </Router>
-//   );
-// }
-// export default App;
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
-import Products from "./pages/Products";
-import Materials from "./pages/Materials";
-import Cart from "./pages/Cart";
-import AdminDashboard from "./pages/AdminDashboard";
-import Navbar from "./components/Navbar";
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import LandingPage from './pages/LandingPage';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Home from './pages/Home';
+import Products from './pages/Products';
+import Materials from './pages/Materials';
+import Courses from './pages/Courses';
+import Cart from './pages/Cart';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
+  const [user, setUser] = useState(null); // { token, role, name }
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) setUser(storedUser);
+  }, []);
+
+  const login = (userData) => {
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
+
+  const logout = () => {
+    setUser(null);
+    setCartItems([]);
+    localStorage.removeItem('user');
+  };
+
   return (
-    <Router>
-      <Navbar />
+    <>
+      <Navbar user={user} cartItems={cartItems} onLogout={logout} />
       <Routes>
+       
         <Route path="/" element={<LandingPage />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/materials" element={<Materials />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login login={login} />} />
+        
+        {user &&  (
+          <>
+            <Route path="/home" element={<Home/>}/>
+            <Route path="/products" element={<Products token={user.token}/>}/>
+            <Route path="/materials" element={<Materials token={user.token}/>}/>
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/cart" element={<Cart token={user.token} />} />
+          </>
+        )} 
+
+        {user && user.role === 'admin' && ( 
+          <Route path="/admin" element={<AdminDashboard token={user.token} />} />
+        )}
       </Routes>
-    </Router>
+    </>
   );
 }
 
 export default App;
+

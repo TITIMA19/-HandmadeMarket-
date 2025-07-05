@@ -238,9 +238,6 @@ function LandingPage() {
         </div>
       </section>
     </main>
-    
-    
-    
          <footer className="text-white py-5 mt-5" style={{ backgroundColor: "#fd7e14" }}>
       <div className="container">
         <div className="row">

@@ -1,33 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import API from '../api';
+import axios from 'axios';
 
-function Products() {
+function Products({ token }) {
   const [products, setProducts] = useState([]);
+  const [cartMessage, setCartMessage] = useState('');
 
   useEffect(() => {
-    API.get("/products").then(res => setProducts(res.data));
+    async function fetchProducts() {
+      const res = await axios.get('http://localhost:3000/api/products');
+      setProducts(res.data);
+    }
+    fetchProducts();
   }, []);
 
-  const addToCart = (product) => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push(product);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert("Added to cart!");
+  const addToCart = async (product) => {
+    try {
+      await axios.post(
+        'http://localhost:3000/api/cart/add',
+        {
+          productId: product._id,
+          itemType: 'Product',
+          quantity: 1,
+          price: product.price,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCartMessage('Added to cart!');
+      setTimeout(() => setCartMessage(''), 2000);
+    } catch {
+      setCartMessage('Failed to add to cart');
+    }
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-3">
       <h2>Products</h2>
+      {cartMessage && <div className="alert alert-success">{cartMessage}</div>}
       <div className="row">
         {products.map(p => (
-          <div key={p._id} className="col-md-4">
+          <div className="col-md-4" key={p._id}>
             <div className="card mb-3">
-              <img src={p.image} className="card-img-top" alt={p.title} />
+              <img src={p.imageBase64} className="card-img-top" alt={p.name} />
               <div className="card-body">
-                <h5 className="card-title">{p.title}</h5>
-                <p className="card-text">{p.description}</p>
-                <p className="card-text">${p.price}</p>
-                <button className="btn btn-primary" onClick={() => addToCart(p)}>Add to Cart</button>
+                <h5 className="card-title">{p.name}</h5>
+                <p>{p.description}</p>
+                <p><b>${p.price}</b></p>
+                <button className="btn btn-primary" style={{ backgroundColor: "#fd7e14", color: "white" , border: "2px solid #fd7e14",}} onClick={() => addToCart(p)}>Add to Cart</button>
               </div>
             </div>
           </div>

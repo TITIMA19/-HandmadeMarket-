@@ -1,31 +1,38 @@
-const User = require("../models/User");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const User = require('../models/User');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = 'your_jwt_secret';
 
 exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
+
+  // Only allow admin registration if name === 'admin' or 'tazrart'
+  let userRole = 'client';
+  if (role === 'admin' && (name === 'admin' || name === 'tazrart')) {
+    userRole = 'admin';
+  } else if (role === 'admin') {
+    return res.status(403).json({ message: 'Admin registration forbidden' });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
   try {
-    const hash = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, password: hash });
-    await newUser.save();
-    res.status(201).json({ message: "User registered" });
+    const user = new User({ name, email, password: hashedPassword, role: userRole });
+    await user.save();
+    res.status(201).json({ message: 'User registered' });
   } catch (err) {
-    res.status(500).json({ message: "Registration failed", error: err.message });
+    res.status(400).json({ message: 'Email exists or error', error: err.message });
   }
 };
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: "User not found" });
+  const user = await User.findOne({ email });
+  if (!user) return res.status(400).json({ message: 'User not found' });
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Wrong password" });
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
-    res.json({ token, user });
-  } catch (err) {
-    res.status(500).json({ message: "Login failed", error: err.message });
-  }
+  const token = jwt.sign({ id: user._id, role: user.role, name: user.name }, JWT_SECRET, { expiresIn: '1d' });
+  res.json({ token, role: user.role, name: user.name });
 };
