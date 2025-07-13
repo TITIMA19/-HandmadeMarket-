@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
   name: String,
-  category: String,
+  category: { 
+    type: String, 
+    enum: ['Accessories', 'Home Decor', 'Fashion'], 
+    required: true 
+  },
   description: String,
   price: Number,
   imageBase64: String,

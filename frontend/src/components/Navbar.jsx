@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from "../assets/Logo/tazrart.png";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 function Navbar({ user, cartItems, onLogout }) {
   const navigate = useNavigate();
 
@@ -65,11 +66,12 @@ function Navbar({ user, cartItems, onLogout }) {
                 </Link>
               </li>
 
-              <li className="nav-item">
-                <Link className="nav-link" to="/cart">
-                  Cart {totalCartCount > 0 && <span>({totalCartCount})</span>}
-                </Link>
-              </li>
+             <li className="nav-item">
+             <Link className="nav-link" to="/cart">
+              <i className="bi bi-cart me-2"></i> {/* Cart icon */}
+               {totalCartCount > 0 && <span>({totalCartCount})</span>}
+             </Link>
+             </li>
 
               {user.role === 'admin' && (
                 <li className="nav-item">

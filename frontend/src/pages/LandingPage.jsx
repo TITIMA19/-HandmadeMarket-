@@ -1,6 +1,10 @@
 import headerimage from "../assets/Logo/headerimage.jpg";
 import  workshop from "../assets/Logo/workshop.jpg";
 import Logo from "../assets/Logo/tazrart.png";
+import Refam from "../assets/Logo/Refam.jpg";
+import nhass from "../assets/Logo/nhas.jpeg";
+import idokan from "../assets/Logo/idokan.jpeg"
+import { Link } from 'react-router-dom';
 function LandingPage() {
   return (
     <> 
@@ -22,41 +26,7 @@ function LandingPage() {
          </header>
     <main className="container py-5">
     
-      {/* 🔶 1. Product Categories with Icons */}
-      {/* <section className="mb-5">
-        <h2 className="fw-bold mb-4 text-center"> Product Categories</h2>
-        <div className="row text-center">
-          <div className="col-md-3 mb-4">
-            <div className="p-4 border rounded shadow-sm h-100">
-              <i className="bi bi-bag-check-fill display-4 text-primary mb-3"></i>
-              <h5>Leather Bags</h5>
-              <p className="text-muted small">Elegant Moroccan bags.</p>
-            </div>
-          </div>
-          <div className="col-md-3 mb-4">
-            <div className="p-4 border rounded shadow-sm h-100">
-              <i className="bi bi-gem display-4 text-danger mb-3"></i>
-              <h5>Jewelry</h5>
-              <p className="text-muted small">Handcrafted traditional jewelry.</p>
-            </div>
-          </div>
-          <div className="col-md-3 mb-4">
-            <div className="p-4 border rounded shadow-sm h-100">
-              <i className="bi bi-basket-fill display-4 text-success mb-3"></i>
-              <h5>Woven Baskets</h5>
-              <p className="text-muted small">Eco-friendly artisan baskets.</p>
-            </div>
-          </div>
-          <div className="col-md-3 mb-4">
-            <div className="p-4 border rounded shadow-sm h-100">
-              <i className="bi bi-palette-fill display-4 text-warning mb-3"></i>
-              <h5>Home Decor</h5>
-              <p className="text-muted small">Authentic Moroccan décor items.</p>
-            </div>
-          </div>
-        </div>
-      </section> */}
-    
+     
       
       <section className="mb-5">
         <h3 className="fw-bold mb-4 text-center">Explore Our Products</h3>
@@ -64,15 +34,18 @@ function LandingPage() {
           {/* Card 1 */}
           <div className="col-md-4 mb-4">
             <div className="card h-100 shadow">
-              <img src="/images/bag.jpg" className="card-img-top" alt="Leather Bag" />
+              <img src={Refam} className="card-img-top" alt="Leather Bag" />
               <div className="card-body">
                 <h5 className="card-title">Classic Leather Bag</h5>
                 <p className="card-text">Made from genuine Moroccan leather. Durable and elegant.</p>
                 <div className="d-flex justify-content-between align-items-center">
                   <span className="fw-bold">$89.99</span>
-                  <button className="btn btn-outline-success">
-                    <i className="bi bi-cart-plus"></i> Add
-                  </button>
+                 
+
+                   <Link to="products" className="btn btn-primary">
+                   <i className="bi bi-cart-plus"></i> More Details
+                  </Link>
+                 
                 </div>
               </div>
             </div>
@@ -81,15 +54,15 @@ function LandingPage() {
           {/* Card 2 */}
           <div className="col-md-4 mb-4">
             <div className="card h-100 shadow">
-              <img src="/images/jewelry.jpg" className="card-img-top" alt="Jewelry" />
+              <img src={nhass}className="card-img-top" alt="Jewelry" />
               <div className="card-body">
                 <h5 className="card-title">Berber Necklace</h5>
                 <p className="card-text">Handcrafted silver and coral jewelry inspired by Amazigh culture.</p>
                 <div className="d-flex justify-content-between align-items-center">
                   <span className="fw-bold">$59.99</span>
-                  <button className="btn btn-outline-success">
-                    <i className="bi bi-cart-plus"></i> Add
-                  </button>
+                  <Link to="products" className="btn btn-primary">
+                   <i className="bi bi-cart-plus"></i> More Details
+                  </Link>
                 </div>
               </div>
             </div>
@@ -98,47 +71,21 @@ function LandingPage() {
           {/* Card 3 */}
           <div className="col-md-4 mb-4">
             <div className="card h-100 shadow">
-              <img src="/images/basket.jpg" className="card-img-top" alt="Basket" />
+              <img src={idokan} className="card-img-top" alt="Basket" />
               <div className="card-body">
                 <h5 className="card-title">Woven Storage Basket</h5>
                 <p className="card-text">Eco-friendly and hand-woven using palm leaves in Marrakech.</p>
                 <div className="d-flex justify-content-between align-items-center">
                   <span className="fw-bold">$39.99</span>
-                  <button className="btn btn-outline-success">
-                    <i className="bi bi-cart-plus"></i> Add
-                  </button>
+                  <Link to="products" className="btn btn-primary">
+                   <i className="bi bi-cart-plus"></i> More Details
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-     {/* <section className="mb-5">
-        <h2 className="fw-bold mb-4 text-center"> Material Categories</h2>
-        <div className="row text-center">
-          <div className="col-md-4 mb-4">
-            <div className="p-4 border rounded shadow-sm h-100">
-              <i className="bi bi-tools display-4 text-secondary mb-3"></i>
-              <h5>Leather</h5>
-              <p className="text-muted small">Durable, high-quality material used for bags and belts.</p>
-            </div>
-          </div>
-          <div className="col-md-4 mb-4">
-            <div className="p-4 border rounded shadow-sm h-100">
-              <i className="bi bi-flower1 display-4 text-success mb-3"></i>
-              <h5>Wool</h5>
-              <p className="text-muted small">Used in traditional rugs and blankets. 100% natural.</p>
-            </div>
-          </div>
-          <div className="col-md-4 mb-4">
-            <div className="p-4 border rounded shadow-sm h-100">
-              <i className="bi bi-droplet-half display-4 text-primary mb-3"></i>
-              <h5>Natural Dyes</h5>
-              <p className="text-muted small">Plant-based dyes used for vibrant, eco-friendly colors.</p>
-            </div>
-          </div>
-        </div>
-      </section> */}
     
       {/* 🔶 2. Material Cards */}
       <section className="mb-5">
