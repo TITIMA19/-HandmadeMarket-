@@ -84,7 +84,7 @@ function Navbar({ user, cartItems, onLogout }) {
 
             <div className="d-flex align-items-center">
               <span className="me-3">Hello, {user.name}</span>
-              <button className="btn btn-outline-danger btn-sm" onClick={handleLogout}>
+              <button className="btn btn-outline-danger btn-sm" onClick={handleLogout}  style={{ backgroundColor: '#fd7e14', color: 'white' , border:'#fd7e14'  }}>
                 Logout
               </button>
             </div>
@@ -92,12 +92,12 @@ function Navbar({ user, cartItems, onLogout }) {
         ) : (
           <ul className="navbar-nav ms-auto">
             <li className="nav-item me-2">
-              <Link className="btn btn-outline-primary" to="/login">
+              <Link className="btn btn-outline-primary"  style={{ backgroundColor: '#fd7e14', color: 'white' , border:'#fd7e14'  }} to="/login">
                 Login
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="btn btn-primary" to="/register">
+              <Link className="btn btn-primary"  style={{ backgroundColor: '#fd7e14', color: 'white', border:'#fd7e14' }} to="/register">
                 Register
               </Link>
             </li>

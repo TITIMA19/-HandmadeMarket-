@@ -12,7 +12,7 @@ import Cart from './pages/Cart';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminProfile from './pages/AdminProfile';
 import ArtisanProfilePage from './pages/ArtisanProfilePage';
-import OrderHistory from './pages/OrderHistory';
+// import OrderHistory from './pages/OrderHistory';
 function App() {
   const [user, setUser] = useState(null); // { token, role, name }
   const [cartItems, setCartItems] = useState([]);
@@ -49,7 +49,7 @@ function App() {
             <Route path="/materials" element={<Materials token={user.token}/>}/>
             <Route path="/courses" element={<Courses />} />
             <Route path="/cart" element={<Cart token={user.token} />} />
-            <Route path="/orders" element={<OrderHistory token={user.token} />} />
+            {/* <Route path="/orders" element={<OrderHistory token={user.token} />} /> */}
 
             <Route path="/about-artisan" element={<ArtisanProfilePage />} />
           </>

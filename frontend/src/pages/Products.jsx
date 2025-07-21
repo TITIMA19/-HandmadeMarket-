@@ -51,14 +51,14 @@ const filteredProducts = selectedCategory === 'All'
       </div>
       {cartMessage && <div className="alert alert-success">{cartMessage}</div>}
       <div className="row">
-        {products.map(p => (
+        {filteredProducts.map(p => (
           <div className="col-md-4" key={p._id}>
             <div className="card mb-3">
               <img src={p.imageBase64} className="card-img-top"  style={{
-    width: '355px',
-    height: '300px',
-    objectFit: 'cover'
-  }} alt={p.name} />
+                width: '355px',
+                height: '300px',
+                objectFit: 'cover'
+                  }} alt={p.name} />
               <div className="card-body">
                 <h5 className="card-title">{p.name}</h5>
                 <p>{p.description}</p>

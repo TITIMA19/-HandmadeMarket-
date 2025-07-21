@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+const categories = ['Accessories', 'Home Decor', 'Fashion'];
 function AdminProducts({ token }) {
   const [products, setProducts] = useState([]);
   const [form, setForm] = useState({ name: '', category: '', description: '', price: '', imageBase64: '' });
@@ -100,14 +100,18 @@ function AdminProducts({ token }) {
           onChange={handleInputChange}
           required
         />
-        <input
-          name="category"
-          className="form-control mb-2"
-          placeholder="Category"
-          value={form.category}
-          onChange={handleInputChange}
-          required
-        />
+       <select
+       name="category"
+       className="form-control mb-2"
+       value={form.category}
+       onChange={handleInputChange}
+      required
+        >
+      <option value="">Sélectionnez une catégorie</option>
+      {categories.map((cat) => (
+       <option key={cat} value={cat}>{cat}</option>
+       ))}
+      </select>
         <textarea
           name="description"
           className="form-control mb-2"

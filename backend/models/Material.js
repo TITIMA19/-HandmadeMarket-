@@ -4,7 +4,7 @@ const materialSchema = new mongoose.Schema({
   name: String,
    category: { 
     type: String, 
-    enum: ['Clay','Leather','Wood'], 
+    enum: ['Clay','Leather','Wood',"workshop"], 
     required: true 
   },
   description: String,

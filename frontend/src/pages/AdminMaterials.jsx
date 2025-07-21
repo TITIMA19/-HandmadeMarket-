@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+const categories = ['Clay','Leather','Wood',"workshop"];
 function AdminMaterials({ token }) {
   const [materials, setMaterials] = useState([]);
   const [form, setForm] = useState({
@@ -125,14 +125,18 @@ function AdminMaterials({ token }) {
           onChange={handleInputChange}
           required
         />
-        <input
-          name="category"
-          className="form-control mb-2"
-          placeholder="Category"
-          value={form.category}
-          onChange={handleInputChange}
-          required
-        />
+        <select
+  name="category"
+  className="form-control mb-2"
+  value={form.category}
+  onChange={handleInputChange}
+  required
+>
+  <option value="">Sélectionnez une catégorie</option>
+  {categories.map((cat) => (
+    <option key={cat} value={cat}>{cat}</option>
+  ))}
+</select>
         <textarea
           name="description"
           className="form-control mb-2"
